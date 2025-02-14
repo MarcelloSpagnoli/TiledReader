@@ -37,9 +37,6 @@ public class FileSystemTiledReader extends TiledReader {
     
     @Override
     public final InputStream getInputStream(String path) {
-        path = path.replace(File.separator, "/");
-        path = path.replaceAll("^.*/../", "");
-        
         File file = new File(path);
         if (file.exists()) {
             try {
@@ -48,6 +45,9 @@ public class FileSystemTiledReader extends TiledReader {
                 throw new RuntimeException("File non trovato nel file system: " + path, e);
             }
         }
+
+        path = path.replace(File.separator, "/");
+        path = path.replaceAll("^.*/../", "");
         // Se il file non esiste nel file system, prova dal classpath (JAR)
         InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
         if (stream == null) {
