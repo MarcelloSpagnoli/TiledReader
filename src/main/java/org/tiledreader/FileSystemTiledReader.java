@@ -3,9 +3,7 @@ package org.tiledreader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,8 +37,9 @@ public class FileSystemTiledReader extends TiledReader {
     
     @Override
     public final InputStream getInputStream(String path) {
+        path = path.replace(File.separator, "/");
         path = path.replaceAll("^.*/../", "");
-        path = path.replaceAll("^.*\\..\\", "");
+        
         File file = new File(path);
         if (file.exists()) {
             try {
